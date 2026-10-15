@@ -40,7 +40,7 @@
 </head>
 <body>
   <audio id="bgm" loop preload="auto">
-    <source src="bgm.mp3" type="audio/mpeg">
+    <source src="Perfect_L.mp3" type="audio/mpeg">
   </audio>
   <div class="sky" id="sky"></div>
   <main class="stage"><section class="card">
@@ -67,7 +67,7 @@
     const sky = document.querySelector('#sky');
     for(let i=0;i<24;i++){ const h=document.createElement('span'); h.className='heart'; h.textContent=['♥','✦','♡'][i%3]; h.style.left=Math.random()*100+'%'; h.style.fontSize=(12+Math.random()*23)+'px'; h.style.animationDuration=(8+Math.random()*10)+'s'; h.style.animationDelay=(-Math.random()*16)+'s'; sky.appendChild(h); }
     const envelope=document.querySelector('#envelope'), message=document.querySelector('#message'), hint=document.querySelector('#hint'), button=document.querySelector('#celebrate');
-    function openLetter(){ if(envelope.classList.contains('open')) return; envelope.classList.add('open'); hint.textContent='信已送达，心意也是。'; setTimeout(()=>{message.classList.add('show'); button.hidden=false; shower();},520); }
+    function openLetter(){ document.querySelector('#bgm').play().catch(() => {}); if(envelope.classList.contains('open')) return; envelope.classList.add('open'); hint.textContent='信已送达，心意也是。'; setTimeout(()=>{message.classList.add('show'); button.hidden=false; shower();},520); }
     envelope.addEventListener('click',openLetter); envelope.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openLetter()});
     function shower(){ const colors=['#ea6d89','#f4bd6a','#ff9dac','#c982a5','#fff']; for(let i=0;i<65;i++){const p=document.createElement('i');p.className='confetti';p.style.left=Math.random()*100+'vw';p.style.background=colors[i%colors.length];p.style.borderRadius=i%3?'50%':'2px';p.style.setProperty('--x',(Math.random()*180-90)+'px');p.style.animationDelay=(Math.random()*.55)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),3500)} }
     button.addEventListener('click',shower);
