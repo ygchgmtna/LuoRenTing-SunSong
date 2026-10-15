@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>给最特别的你</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+    :root { --ink:#552d3b; --rose:#ea6d89; --deep:#cc486b; --cream:#fff8f1; --gold:#f2c47b; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; overflow-x:hidden; color:var(--ink); background:radial-gradient(circle at 15% 8%,#fff 0 3%,transparent 24%),linear-gradient(135deg,#fff6f4 0%,#ffe8e7 48%,#fff5e5 100%); font-family:"Noto Serif SC",serif; }
+    .sky { position:fixed; inset:0; pointer-events:none; overflow:hidden; }
+    .heart { position:absolute; color:#f58da5; opacity:.34; animation:float linear infinite; }
+    @keyframes float { from{transform:translateY(108vh) rotate(0deg);opacity:0} 10%{opacity:.4} 90%{opacity:.4} to{transform:translateY(-15vh) rotate(35deg);opacity:0} }
+    .stage { min-height:100vh; display:grid; place-items:center; padding:34px 18px; position:relative; }
+    .card { width:min(720px,100%); position:relative; z-index:1; background:rgba(255,253,249,.76); border:1px solid rgba(234,109,137,.25); border-radius:30px; padding:clamp(28px,7vw,60px); box-shadow:0 20px 70px rgba(151,73,95,.18); backdrop-filter:blur(8px); text-align:center; }
+    .eyebrow { margin:0 0 12px; color:var(--deep); font-size:.9rem; letter-spacing:.22em; }
+    h1 { margin:0; font-family:"Ma Shan Zheng",cursive; font-size:clamp(3rem,12vw,6.5rem); font-weight:400; line-height:1; color:var(--deep); text-shadow:2px 3px 0 #ffe1df; }
+    .subtitle { margin:18px auto 30px; max-width:430px; font-size:1.05rem; line-height:1.9; }
+    .envelope { width:min(300px,78vw); height:190px; position:relative; margin:0 auto 28px; cursor:pointer; perspective:850px; filter:drop-shadow(0 13px 12px rgba(113,50,66,.16)); }
+    .envelope .base { position:absolute; inset:35px 0 0; border-radius:0 0 15px 15px; background:#f3a0ad; overflow:hidden; }
+    .base:before,.base:after { content:""; position:absolute; width:220px; height:220px; background:#f8bbc3; transform:rotate(45deg); top:58px; }
+    .base:before{ left:-110px; } .base:after{ right:-110px; }
+    .flap { position:absolute; top:34px; left:0; width:0; height:0; border-left:150px solid transparent; border-right:150px solid transparent; border-top:105px solid #e87c92; transform-origin:top; transition:transform .7s cubic-bezier(.2,.8,.2,1); z-index:3; }
+    .letter { position:absolute; width:84%; height:142px; left:8%; top:43px; border-radius:9px; padding:16px; background:#fffdf8; transition:transform .75s cubic-bezier(.2,.9,.2,1); z-index:2; font-size:.83rem; line-height:1.65; box-shadow:0 2px 10px rgba(119,59,72,.1); }
+    .seal { position:absolute; z-index:4; top:106px; left:calc(50% - 22px); width:44px; height:44px; display:grid; place-items:center; border-radius:50%; background:var(--deep); color:white; font-size:1.2rem; transition:opacity .25s; }
+    .envelope.open .flap { transform:rotateX(180deg); z-index:1; } .envelope.open .letter { transform:translateY(-86px); } .envelope.open .seal{opacity:0;}
+    .hint { color:#a05e70; font-size:.85rem; min-height:1.5em; }
+    .message { display:none; margin:12px auto 0; max-width:520px; text-align:left; background:#fffdf9; border-left:4px solid var(--rose); border-radius:8px; padding:20px 24px; line-height:2; animation:appear .8s ease both; }
+    .message.show{display:block;} @keyframes appear{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+    .sign { display:block; margin-top:9px; color:var(--deep); text-align:right; font-family:"Ma Shan Zheng",cursive; font-size:1.55rem; }
+    button { margin-top:26px; border:0; border-radius:999px; padding:13px 22px; background:var(--deep); color:#fff; font:600 .95rem "Noto Serif SC",serif; letter-spacing:.08em; cursor:pointer; box-shadow:0 7px 16px rgba(204,72,107,.25); transition:transform .2s,background .2s; }
+    button:hover { transform:translateY(-2px); background:#b83d5d; }
+    .tiny { margin-top:18px; color:#b6808d; font-size:.76rem; }
+    .confetti { position:fixed; width:11px; height:11px; top:-20px; z-index:5; pointer-events:none; animation:fall 2.8s linear forwards; }
+    @keyframes fall { to{transform:translate(var(--x),105vh) rotate(720deg);opacity:0} }
+    @media (max-width:430px){.card{padding:32px 18px}.message{padding:16px}.envelope{transform:scale(.9);margin:-8px auto 15px}}
+  </style>
+</head>
+<body>
+  <div class="sky" id="sky"></div>
+  <main class="stage"><section class="card">
+    <p class="eyebrow">A LITTLE SURPRISE FOR YOU</p>
+    <h1>给最特别的你</h1>
+    <p class="subtitle">我把想说的话，偷偷藏进了一封信里。<br>准备好了吗？</p>
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="打开情书">
+      <div class="letter">致我最喜欢的罗任婷：<br>谢谢你让平凡的每一天，都变得闪闪发光。</div>
+      <div class="base"></div><div class="flap"></div><div class="seal">♥</div>
+    </div>
+    <p class="hint" id="hint">轻轻点一下信封，把它打开吧</p>
+    <article class="message" id="message">
+      亲爱的，<br>
+      遇见你以后，我开始期待每一个普通的明天：期待和你分享晚霞、好吃的东西，还有那些没什么大不了的小事。<br>
+      你不用永远完美，也不用时时刻刻开心；在我这里，你只要做你自己，就已经足够可爱。<br>
+      谢谢你出现在我的世界里。希望以后的很多很多天，也都能有你。
+      <span class="sign">永远偏爱你的孙嵩 ♥</span>
+    </article>
+    <button id="celebrate" hidden>再收一场心动雨</button>
+    <p class="tiny">P.S. 这颗心会一直为你跳动。</p>
+  </section></main>
+  <script>
+    const sky = document.querySelector('#sky');
+    for(let i=0;i<24;i++){ const h=document.createElement('span'); h.className='heart'; h.textContent=['♥','✦','♡'][i%3]; h.style.left=Math.random()*100+'%'; h.style.fontSize=(12+Math.random()*23)+'px'; h.style.animationDuration=(8+Math.random()*10)+'s'; h.style.animationDelay=(-Math.random()*16)+'s'; sky.appendChild(h); }
+    const envelope=document.querySelector('#envelope'), message=document.querySelector('#message'), hint=document.querySelector('#hint'), button=document.querySelector('#celebrate');
+    function openLetter(){ if(envelope.classList.contains('open')) return; envelope.classList.add('open'); hint.textContent='信已送达，心意也是。'; setTimeout(()=>{message.classList.add('show'); button.hidden=false; shower();},520); }
+    envelope.addEventListener('click',openLetter); envelope.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openLetter()});
+    function shower(){ const colors=['#ea6d89','#f4bd6a','#ff9dac','#c982a5','#fff']; for(let i=0;i<65;i++){const p=document.createElement('i');p.className='confetti';p.style.left=Math.random()*100+'vw';p.style.background=colors[i%colors.length];p.style.borderRadius=i%3?'50%':'2px';p.style.setProperty('--x',(Math.random()*180-90)+'px');p.style.animationDelay=(Math.random()*.55)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),3500)} }
+    button.addEventListener('click',shower);
+  </script>
+</body>
+</html>
